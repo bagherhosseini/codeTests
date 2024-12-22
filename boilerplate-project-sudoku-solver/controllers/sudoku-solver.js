@@ -21,19 +21,32 @@ class SudokuSolver {
   checkRowPlacement(puzzleString, row, column, value) {
     const grid = this.transformToGrid(puzzleString);
     const rowIndex = row.charCodeAt(0) - 65; // Convert A-I to 0-8
+    value = parseInt(value);
     
     // Check if value already exists in row
-    return !grid[rowIndex].includes(value);
+    for (let i = 0; i < 9; i++) {
+      if (grid[rowIndex][i] === value) {
+        // Skip the current position we're checking
+        if (i === column - 1) continue;
+        return false;
+      }
+    }
+    return true;
   }
 
   checkColPlacement(puzzleString, row, column, value) {
     const grid = this.transformToGrid(puzzleString);
     const rowIndex = row.charCodeAt(0) - 65;
     const colIndex = column - 1;
+    value = parseInt(value);
     
     // Check column
     for (let i = 0; i < 9; i++) {
-      if (grid[i][colIndex] === value) return false;
+      if (grid[i][colIndex] === value) {
+        // Skip the current position we're checking
+        if (i === rowIndex) continue;
+        return false;
+      }
     }
     return true;
   }
@@ -42,6 +55,7 @@ class SudokuSolver {
     const grid = this.transformToGrid(puzzleString);
     const rowIndex = row.charCodeAt(0) - 65;
     const colIndex = column - 1;
+    value = parseInt(value);
     
     // Get region start indices
     const regionRow = Math.floor(rowIndex / 3) * 3;
@@ -50,7 +64,11 @@ class SudokuSolver {
     // Check 3x3 region
     for (let i = regionRow; i < regionRow + 3; i++) {
       for (let j = regionCol; j < regionCol + 3; j++) {
-        if (grid[i][j] === value) return false;
+        if (grid[i][j] === value) {
+          // Skip the current position we're checking
+          if (i === rowIndex && j === colIndex) continue;
+          return false;
+        }
       }
     }
     return true;
