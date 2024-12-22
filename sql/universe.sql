@@ -86,11 +86,7 @@ ALTER SEQUENCE public.cosmic_phenomena_phenomena_id_seq OWNED BY public.cosmic_p
 
 CREATE TABLE public.galaxy (
     galaxy_id integer NOT NULL,
-    name character varying(50) NOT NULL,
-    description text,
-    age_in_millions_of_years integer,
-    has_black_hole boolean DEFAULT false,
-    distance_from_earth_light_years numeric(10,2)
+    name character varying(50) NOT NULL
 );
 
 
@@ -283,48 +279,24 @@ INSERT INTO public.cosmic_phenomena VALUES (5, 'Pillars of Creation', 'Nebula Fo
 -- Data for Name: galaxy; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.galaxy VALUES (1, 'Milky Way', 'Our home galaxy', 13600, true, NULL);
-INSERT INTO public.galaxy VALUES (2, 'Andromeda', 'Nearest major galaxy to the Milky Way', 10000, true, NULL);
-INSERT INTO public.galaxy VALUES (3, 'Triangulum', 'Third-largest galaxy in the Local Group', 9000, false, NULL);
-INSERT INTO public.galaxy VALUES (4, 'Sombrero Galaxy', 'Notable for its bright nucleus', 13250, true, NULL);
-INSERT INTO public.galaxy VALUES (5, 'Whirlpool Galaxy', 'Classic spiral galaxy', 400, false, NULL);
-INSERT INTO public.galaxy VALUES (6, 'Centaurus A', 'Peculiar galaxy with dark dust lane', 12000, true, NULL);
 
 
 --
 -- Data for Name: moon; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.moon VALUES (1, 'Moon', 1, true, 3474.80, 27.32);
-INSERT INTO public.moon VALUES (2, 'Phobos', 2, true, 22.20, 0.32);
-INSERT INTO public.moon VALUES (3, 'Deimos', 2, true, 12.60, 1.26);
-INSERT INTO public.moon VALUES (4, 'Io', 5, true, 3642.00, 1.77);
-INSERT INTO public.moon VALUES (5, 'Europa', 5, true, 3121.60, 3.55);
-INSERT INTO public.moon VALUES (6, 'Titan', 6, true, 5149.50, 15.95);
 
 
 --
 -- Data for Name: planet; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.planet VALUES (1, 'Earth', 1, true, true, 365.26, 1);
-INSERT INTO public.planet VALUES (2, 'Mars', 1, false, true, 687.00, 2);
-INSERT INTO public.planet VALUES (3, 'Venus', 1, false, true, 224.70, 0);
-INSERT INTO public.planet VALUES (4, 'Mercury', 1, false, true, 88.00, 0);
-INSERT INTO public.planet VALUES (5, 'Jupiter', 1, false, true, 4333.00, 79);
-INSERT INTO public.planet VALUES (6, 'Saturn', 1, false, true, 10759.22, 82);
 
 
 --
 -- Data for Name: star; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.star VALUES (1, 'Sun', 1, 5778, true, 1.00);
-INSERT INTO public.star VALUES (2, 'Proxima Centauri', 1, 3042, true, 0.12);
-INSERT INTO public.star VALUES (3, 'Alpha Centauri A', 1, 5790, true, 1.10);
-INSERT INTO public.star VALUES (4, 'Sirius', 1, 9940, true, 2.02);
-INSERT INTO public.star VALUES (5, 'Betelgeuse', 1, 3600, true, 16.50);
-INSERT INTO public.star VALUES (6, 'Vega', 1, 9602, true, 2.15);
 
 
 --
@@ -338,7 +310,7 @@ SELECT pg_catalog.setval('public.cosmic_phenomena_phenomena_id_seq', 5, true);
 -- Name: galaxy_galaxy_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 6, true);
+SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 1, false);
 
 
 --
@@ -376,14 +348,6 @@ ALTER TABLE ONLY public.cosmic_phenomena
 
 ALTER TABLE ONLY public.cosmic_phenomena
     ADD CONSTRAINT cosmic_phenomena_pkey PRIMARY KEY (phenomena_id);
-
-
---
--- Name: galaxy galaxy_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
---
-
-ALTER TABLE ONLY public.galaxy
-    ADD CONSTRAINT galaxy_name_key UNIQUE (name);
 
 
 --
