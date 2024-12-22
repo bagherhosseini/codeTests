@@ -3,7 +3,7 @@ require('dotenv').config();
 const express     = require('express');
 const bodyParser  = require('body-parser');
 const cors        = require('cors');
-const helmet      = require('helmet');
+const helmet = require('helmet');
 
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
@@ -18,14 +18,28 @@ app.use(cors({origin: '*'})); //For FCC testing purposes only
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Add these headers to your existing server.js
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'"],
-    styleSrc: ["'self'"]
+// Security middleware
+app.use(helmet({
+  frameguard: {
+    action: 'SAMEORIGIN'
+  },
+  dnsPrefetchControl: {
+    allow: false
+  },
+  referrerPolicy: {
+    policy: 'same-origin'
   }
 }));
+
+//Sample front-end
+app.route('/b/:board/')
+  .get(function (req, res) {
+    res.sendFile(process.cwd() + '/views/board.html');
+  });
+app.route('/b/:board/:threadid')
+  .get(function (req, res) {
+    res.sendFile(process.cwd() + '/views/thread.html');
+  });
 
 //Index page (static HTML)
 app.route('/')
@@ -37,8 +51,8 @@ app.route('/')
 fccTestingRoutes(app);
 
 //Routing for API 
-apiRoutes(app);  
-    
+app.use('/api', apiRoutes);
+
 //404 Not Found Middleware
 app.use(function(req, res, next) {
   res.status(404)
@@ -58,7 +72,7 @@ const listener = app.listen(process.env.PORT || 3000, function () {
         console.log('Tests are not valid:');
         console.error(e);
       }
-    }, 3500);
+    }, 1500);
   }
 });
 
